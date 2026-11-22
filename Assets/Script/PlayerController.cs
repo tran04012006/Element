@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -17,24 +18,33 @@ public class PlayerController : MonoBehaviour
     public PlayerIdle playerIdle;
     public PlayerRun playerRun;
     public PlayerJump playerJump;
+    public PlayerAttack playerAttack;
     
     [Header("Control")]
     public KeyCode leftKey = KeyCode.A;
     public KeyCode rightKey = KeyCode.D;
     public KeyCode upKey = KeyCode.W;
     public KeyCode downKey = KeyCode.S;
-    public KeyCode atk1 = KeyCode.J;
+    public KeyCode atk1Key = KeyCode.J;
     
     [Header("Component")]
     public Animator _animator;
     public SpriteRenderer spriteRenderer;
     public Rigidbody2D rigidbody2D;
     
+    //attack
+    public enum AttackType
+    {
+        PlayerLightAttack,
+        NoAttack,
+    }
+    public AttackType currentAttackType;
+    
     [Header("Boolean")]
     public bool isGround = true;
-
     public bool isJumping = false;
-
+    public bool recover = false;
+  
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
@@ -44,8 +54,9 @@ public class PlayerController : MonoBehaviour
         playerIdle = new PlayerIdle(this);
         playerRun = new PlayerRun(this);
         playerJump = new PlayerJump(this);
+        playerAttack = new PlayerAttack(this);
         ChangeState(playerIdle);
-
+        currentAttackType = AttackType.NoAttack;
     }
     public void FixedUpdate()
     {
@@ -54,9 +65,9 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("moveY: " + moveY);
         Direction();
         Movement();
+        Attack();
         if (moveX == 0)
         {
             isMoving = false;
@@ -66,7 +77,6 @@ public class PlayerController : MonoBehaviour
             isMoving = true;
         }
         currentState.Update();
-        Debug.Log("currentState: " + currentState);
     }
     
     private void OnCollisionEnter2D(Collision2D other)
@@ -131,5 +141,26 @@ public class PlayerController : MonoBehaviour
 
         currentState = newState;
         currentState.Enter();
+    }
+    
+
+    void Attack()
+    {
+        if (Input.GetKeyDown(atk1Key))
+        {
+            recover = false;
+            Debug.Log("di vao attack");
+            Debug.Log("currentAttackType: " + currentAttackType);
+            currentAttackType = AttackType.PlayerLightAttack;
+        }
+    }
+
+    public void Recover()
+    {
+        Debug.Log("chay recover");
+        Debug.Log("currentAttackType: " + currentAttackType);
+        currentAttackType = AttackType.NoAttack;
+        recover = true;
+        //ChangeState(playerIdle);
     }
 }

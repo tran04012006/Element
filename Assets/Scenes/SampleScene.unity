@@ -433,7 +433,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!95 &976255490
 Animator:
   serializedVersion: 7
@@ -551,9 +551,11 @@ MonoBehaviour:
   rightKey: 100
   upKey: 119
   downKey: 115
+  atk1Key: 106
   _animator: {fileID: 0}
   spriteRenderer: {fileID: 0}
   rigidbody2D: {fileID: 0}
+  currentAttackType: 0
   isGround: 1
   isJumping: 0
 --- !u!1 &1077281407
