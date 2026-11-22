@@ -28,6 +28,7 @@ public class PlayerController : MonoBehaviour
     public KeyCode atk1Key = KeyCode.J;
     public KeyCode atk2Key = KeyCode.K;
     public KeyCode atk3Key = KeyCode.L;
+    public KeyCode airAttackKey = KeyCode.O;
 
     [Header("Component")]
     public Animator _animator;
@@ -40,6 +41,7 @@ public class PlayerController : MonoBehaviour
         Attack1,
         Attack2,
         Attack3,
+        AirAttack,
         NoAttack,
     }
     public AttackType currentAttackType;
@@ -164,6 +166,11 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(atk3Key))
         {
             currentAttackType = AttackType.Attack3;
+        }
+
+        if (Input.GetKeyDown(airAttackKey))
+        {
+            currentAttackType = AttackType.AirAttack;
         }
         
         Debug.Log("currentAttackType: " + currentAttackType);
