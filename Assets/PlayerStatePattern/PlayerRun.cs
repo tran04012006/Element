@@ -32,6 +32,10 @@ public class PlayerRun : IPlayerStatePattern
         {
             _playerController.ChangeState(_playerController.playerJump);
         }
+        if (_playerController.currentAttackType != PlayerController.AttackType.NoAttack)
+        { 
+            _playerController.ChangeState(_playerController.playerAttack);
+        }
     }
 
     public void Exit()

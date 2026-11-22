@@ -30,7 +30,6 @@ public class PlayerIdle : IPlayerStatePattern
 
         if (_playerController.currentAttackType != PlayerController.AttackType.NoAttack)
         { 
-            Debug.Log("idle -> attack");
             _playerController.ChangeState(_playerController.playerAttack);
         }
     }

@@ -552,12 +552,14 @@ MonoBehaviour:
   upKey: 119
   downKey: 115
   atk1Key: 106
+  atk2Key: 107
   _animator: {fileID: 0}
   spriteRenderer: {fileID: 0}
   rigidbody2D: {fileID: 0}
   currentAttackType: 0
   isGround: 1
   isJumping: 0
+  recover: 0
 --- !u!1 &1077281407
 GameObject:
   m_ObjectHideFlags: 0

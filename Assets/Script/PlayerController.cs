@@ -26,6 +26,7 @@ public class PlayerController : MonoBehaviour
     public KeyCode upKey = KeyCode.W;
     public KeyCode downKey = KeyCode.S;
     public KeyCode atk1Key = KeyCode.J;
+    public KeyCode atk2Key = KeyCode.K;
     
     [Header("Component")]
     public Animator _animator;
@@ -35,7 +36,8 @@ public class PlayerController : MonoBehaviour
     //attack
     public enum AttackType
     {
-        PlayerLightAttack,
+        Attack1,
+        Attack2,
         NoAttack,
     }
     public AttackType currentAttackType;
@@ -146,21 +148,24 @@ public class PlayerController : MonoBehaviour
 
     void Attack()
     {
+        recover = false;
         if (Input.GetKeyDown(atk1Key))
         {
-            recover = false;
-            Debug.Log("di vao attack");
-            Debug.Log("currentAttackType: " + currentAttackType);
-            currentAttackType = AttackType.PlayerLightAttack;
+            currentAttackType = AttackType.Attack1;
         }
+
+        if (Input.GetKeyDown(atk2Key))
+        {
+            Debug.Log("nhan K");
+            currentAttackType = AttackType.Attack2;
+        }
+        Debug.Log("currentAttackType: " + currentAttackType);
     }
 
     public void Recover()
     {
         Debug.Log("chay recover");
-        Debug.Log("currentAttackType: " + currentAttackType);
         currentAttackType = AttackType.NoAttack;
-        recover = true;
-        //ChangeState(playerIdle);
+        ChangeState(playerIdle);
     }
 }

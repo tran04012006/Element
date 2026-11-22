@@ -14,21 +14,18 @@ public class PlayerAttack : IPlayerStatePattern
     }
     public void Enter()
     {
-        
-        if (_playerController.currentAttackType == PlayerController.AttackType.PlayerLightAttack)
+        if (_playerController.currentAttackType == PlayerController.AttackType.Attack1)
         {
             _animator.SetInteger("Status", 3);
         }
-        
+        if (_playerController.currentAttackType == PlayerController.AttackType.Attack2)
+        {
+            _animator.SetInteger("Status", 4);
+        }
     }
 
     public void Update()
     {
-        
-        if (_playerController.recover == true)
-        {
-            _playerController.ChangeState(_playerController.playerIdle);
-        }
         
     }
 
