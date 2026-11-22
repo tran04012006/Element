@@ -27,7 +27,8 @@ public class PlayerController : MonoBehaviour
     public KeyCode downKey = KeyCode.S;
     public KeyCode atk1Key = KeyCode.J;
     public KeyCode atk2Key = KeyCode.K;
-    
+    public KeyCode atk3Key = KeyCode.L;
+
     [Header("Component")]
     public Animator _animator;
     public SpriteRenderer spriteRenderer;
@@ -38,6 +39,7 @@ public class PlayerController : MonoBehaviour
     {
         Attack1,
         Attack2,
+        Attack3,
         NoAttack,
     }
     public AttackType currentAttackType;
@@ -156,9 +158,14 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyDown(atk2Key))
         {
-            Debug.Log("nhan K");
             currentAttackType = AttackType.Attack2;
         }
+        
+        if (Input.GetKeyDown(atk3Key))
+        {
+            currentAttackType = AttackType.Attack3;
+        }
+        
         Debug.Log("currentAttackType: " + currentAttackType);
     }
 

@@ -22,6 +22,10 @@ public class PlayerAttack : IPlayerStatePattern
         {
             _animator.SetInteger("Status", 4);
         }
+        if (_playerController.currentAttackType == PlayerController.AttackType.Attack3)
+        {
+            _animator.SetInteger("Status", 5);
+        }
     }
 
     public void Update()
