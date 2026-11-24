@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour
     public PlayerRun playerRun;
     public PlayerJump playerJump;
     public PlayerAttack playerAttack;
+    public PlayerTakeHit playerTakeHit;
     
     [Header("Control")]
     public KeyCode leftKey = KeyCode.A;
@@ -36,6 +37,7 @@ public class PlayerController : MonoBehaviour
     public Rigidbody2D rigidbody2D;
     
     //attack
+    public HitBox hitBox;
     public enum AttackType
     {
         Attack1,
@@ -50,23 +52,28 @@ public class PlayerController : MonoBehaviour
     public bool isGround = true;
     public bool isJumping = false;
     public bool recover = false;
-  
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
         _animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         rigidbody2D = GetComponent<Rigidbody2D>();
+        //player
         playerIdle = new PlayerIdle(this);
         playerRun = new PlayerRun(this);
         playerJump = new PlayerJump(this);
         playerAttack = new PlayerAttack(this);
+        playerTakeHit = new PlayerTakeHit(this);
         ChangeState(playerIdle);
         currentAttackType = AttackType.NoAttack;
+        //attack
+        hitBox = GetComponentInChildren<HitBox>();
     }
     public void FixedUpdate()
     {
-        rigidbody2D.linearVelocity = new Vector2(moveX * moveSpeed, rigidbody2D.linearVelocity.y);
+        if (Input.GetKey(leftKey) || Input.GetKey(rightKey))
+            rigidbody2D.linearVelocity = new Vector2(moveX * moveSpeed, rigidbody2D.linearVelocity.y);
     }
     // Update is called once per frame
     void Update()
@@ -113,18 +120,21 @@ public class PlayerController : MonoBehaviour
 
     private void Direction()
     {
-        if (moveX == -1)
+        if (moveX == -1 && Input.GetKey(leftKey))
         {
             //di sang trai
+            Debug.Log("di sang trai");
             isRight = false;
             spriteRenderer.flipX = true;
+            hitBox._boxCollider2D.offset = new Vector2(-1.142364f, -0.1456808f);
         }
         
-        if (moveX == 1)
+        if (moveX == 1 && Input.GetKey(rightKey))
         {
             //di sang phai
             isRight = true;
             spriteRenderer.flipX = false;
+            hitBox._boxCollider2D.offset = new Vector2(1.142364f, -0.1456808f);
         }
 
         if (Input.GetKey(upKey))
@@ -173,13 +183,24 @@ public class PlayerController : MonoBehaviour
             currentAttackType = AttackType.AirAttack;
         }
         
-        Debug.Log("currentAttackType: " + currentAttackType);
+        //Debug.Log("currentAttackType: " + currentAttackType);
     }
 
     public void Recover()
     {
         Debug.Log("chay recover");
         currentAttackType = AttackType.NoAttack;
+        //isTakingHit = false;
         ChangeState(playerIdle);
+    }
+
+    public void EnableHitBox()
+    {
+        hitBox.EnableHitBox();
+    }
+
+    public void DisableHitBox()
+    {
+        hitBox.DisableHitBox();
     }
 }

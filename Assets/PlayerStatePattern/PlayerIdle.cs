@@ -32,6 +32,12 @@ public class PlayerIdle : IPlayerStatePattern
         { 
             _playerController.ChangeState(_playerController.playerAttack);
         }
+    /*
+        if (_playerController.isTakingHit == true)
+        {
+            _playerController.ChangeState(_playerController.playerTakeHit);
+        }
+        */
     }
 
 
